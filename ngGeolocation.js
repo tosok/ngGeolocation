@@ -15,16 +15,12 @@
                 if(supported()) {
                     $window.navigator.geolocation.getCurrentPosition(
                         function(position) {
-                            $rootScope.$apply(function() {
-                                retVal.position.coords = position.coords;
-                                retVal.position.timestamp = position.timestamp;
-                                deferred.resolve(position);
-                            });
+                            retVal.position.coords = position.coords;
+                            retVal.position.timestamp = position.timestamp;
+                            deferred.resolve(position);
                         },
                         function(error) {
-                            $rootScope.$apply(function() {
-                                deferred.reject({error: error});
-                            });
+                            deferred.reject({error: error});
                         }, options);
                 } else {
                     deferred.reject({error: {
@@ -40,20 +36,16 @@
                     if(!this.watchId) {
                         this.watchId = $window.navigator.geolocation.watchPosition(
                             function(position) {
-                                $rootScope.$apply(function() {
-                                    retVal.position.coords = position.coords;
-                                    retVal.position.timestamp = position.timestamp;
-                                    delete retVal.position.error;
-                                    $rootScope.$broadcast('$geolocation.position.changed', position);
-                                });
+                                retVal.position.coords = position.coords;
+                                retVal.position.timestamp = position.timestamp;
+                                delete retVal.position.error;
+                                $rootScope.$broadcast('$geolocation.position.changed', position);
                             },
                             function(error) {
-                                $rootScope.$apply(function() {
-                                    retVal.position.error = error;
-                                    delete retVal.position.coords;
-                                    delete retVal.position.timestamp;
-                                    $rootScope.$broadcast('$geolocation.position.error', error);
-                                });
+                                retVal.position.error = error;
+                                delete retVal.position.coords;
+                                delete retVal.position.timestamp;
+                                $rootScope.$broadcast('$geolocation.position.error', error);
                             }, options);
                     }
                 } else {
